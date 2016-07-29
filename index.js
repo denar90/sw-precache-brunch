@@ -2,10 +2,8 @@
 
 const swPrecache = require('sw-precache');
 const sysPath = require('path');
-const fs = require('fs');
 const defaultSWOptions = {staticFileGlobs: []};
 let swFileName = 'sw.js';
-
 
 class SWCompiler {
 
@@ -25,10 +23,8 @@ class SWCompiler {
     if (!this.options.staticFileGlobs.length) this.options.staticFileGlobs.push(`${publicPath}/**/*.*`);
   }
 
-  compile() {
-    return swPrecache.generate(this.options).then(serviceWorkerFileContents => {
-      fs.writeFile(this.swFilePath, serviceWorkerFileContents, finish);
-    }, finish);
+  teardown() {
+    return swPrecache.write(his.swFilePath, this.options);
   }
 }
 

@@ -45,11 +45,6 @@ module.exports = {
     },
     stylesheets: {joinTo: 'app.css'},
   },
-  modules: {
-    autoRequire: {
-      'test.js': ['test/specs']
-    }
-  },
   plugins: {
     babel: {presets: ['es2015']},
     swPrecache: {
