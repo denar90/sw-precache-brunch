@@ -1,0 +1,30 @@
+{
+  "name": "sw-precache-brunch",
+  "version": "1.0.0",
+  "description": "Adds offline first approach support to brunch.",
+  "author": "denar90",
+  "homepage": "https://github.com/denar90/sw-precache-brunch",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:denar90/sw-precache-brunch.git"
+  },
+  "keywords": [
+    "brunch",
+    "build tool",
+    "service worker",
+    "sw-precache",
+    "offline first"
+  ],
+  "scripts": {
+    "test": "node_modules/.bin/eslint index.js && node_modules/.bin/mocha"
+  },
+  "dependencies": {
+    "sw-precache": "^3.2.0"
+  },
+  "devDependencies": {
+    "chai": "~3.4.1",
+    "eslint": "^1.10.3",
+    "mocha": "~2.3.4"
+  }
+}
