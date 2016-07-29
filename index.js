@@ -24,7 +24,7 @@ class SWCompiler {
   }
 
   teardown() {
-    return swPrecache.write(his.swFilePath, this.options);
+    swPrecache.write(this.swFilePath, this.options);
   }
 }
 
