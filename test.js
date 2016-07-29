@@ -22,8 +22,8 @@ describe('Plugin', () => {
     expect(plugin).to.be.ok;
   });
 
-  it('should has #teardown method', function() {
-    expect(plugin.teardown).to.be.an.instanceof(Function);
+  it('should has #onCompile method', function() {
+    expect(plugin.onCompile).to.be.an.instanceof(Function);
   });
 
   it('should has #_setConfig method', function() {

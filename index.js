@@ -23,8 +23,8 @@ class SWCompiler {
     if (!this.options.staticFileGlobs.length) this.options.staticFileGlobs.push(`${publicPath}/**/*.*`);
   }
 
-  teardown() {
-    swPrecache.write(this.swFilePath, this.options);
+  onCompile() {
+    return swPrecache.write(this.swFilePath, this.options);
   }
 }
 
