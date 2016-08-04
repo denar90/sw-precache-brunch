@@ -3,6 +3,9 @@
 const swPrecache = require('sw-precache');
 const sysPath = require('path');
 const defaultSWOptions = {staticFileGlobs: []};
+const fs = require('fs');
+const async = require('async');
+const cheerio = require('cheerio');
 let swFileName = 'sw.js';
 
 class SWCompiler {
@@ -16,14 +19,61 @@ class SWCompiler {
     const publicPath = cfg.paths.public;
     const config = cfg.plugins && cfg.plugins.swPrecache;
 
-    swFileName = config.swFileName || swFileName;
-
-    this.swFilePath = sysPath.join(publicPath, swFileName);
+    this.swFileName = config.swFileName || swFileName;
+    this.swFilePath = sysPath.join(publicPath, this.swFileName);
+    this.autorequire = (Array.isArray(config.autorequire) || config.autorequire === true) ? config.autorequire : false;
     this.options = config.options || defaultSWOptions;
+
     if (!this.options.staticFileGlobs.length) this.options.staticFileGlobs.push(`${publicPath}/**/*.*`);
   }
 
-  onCompile() {
+  _getAssetsList(originalAssets) {
+    originalAssets = originalAssets.map((data) => {
+      return data.destinationPath;
+    });
+
+    return Array.isArray(this.autorequire) ? this.autorequire : originalAssets;
+  }
+
+  _includeSWIntoAsset(assetsList) {
+    async.each(assetsList, this._openFile.bind(this));
+  }
+
+  _openFile(file, cb) {
+    fs.readFile(file, 'utf8', (err, fileContent) => {
+      if (err) cb(err);
+
+      try {
+        this._writeFile({fileContent: this._changeFileContent(fileContent), filePath: file}, cb);
+      } catch (e) {
+        cb(e);
+      }
+    });
+  }
+
+  _changeFileContent(fileContent) {
+    const $ = cheerio.load(fileContent);
+    const swSource = `\<script src='${this.swFileName}'\>\<\/script\>\n`;
+    const registrationScript = `\<script\>if ('serviceWorker' in navigator) navigator.serviceWorker.register('${this.swFileName}')\<\/script\>\n`;
+
+    $('html').append(swSource, registrationScript);
+
+    return $.html();
+  }
+
+  _writeFile(data, cb) {
+    fs.writeFile(data.filePath, data.fileContent, 'utf8', (err) => {
+      if (err) console.log(err);
+      cb();
+    });
+  }
+
+  onCompile(assets) {
+    if (this.autorequire) {
+      const assetsList = this._getAssetsList(assets);
+      this._includeSWIntoAsset(assetsList);
+    }
+
     return swPrecache.write(this.swFilePath, this.options);
   }
 }
