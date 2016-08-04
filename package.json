@@ -17,7 +17,7 @@
     "offline first"
   ],
   "scripts": {
-    "test": "node_modules/.bin/eslint index.js && node_modules/.bin/mocha"
+    "test": "eslint index.js && mocha"
   },
   "dependencies": {
     "async": "^2.0.1",

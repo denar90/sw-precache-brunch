@@ -68,7 +68,7 @@ class SWCompiler {
     });
   }
 
-  onCompile(assets) {
+  onCompile(files, assets) {
     if (this.autorequire) {
       const assetsList = this._getAssetsList(assets);
       this._includeSWIntoAsset(assetsList);
