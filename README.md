@@ -20,6 +20,31 @@ Filename for service worker.
 
 *Default:* `'sw.js'`
 
+
+##### autorequire [Boolean, Array]
+
+This option gives possibility to add and register 
+service worker into `html` asset files.
+> If value set as `true` service worker will be added and registered to ALL `html` assets automatically.
+
+Config example: 
+
+```js
+swPrecache: {
+  'swFileName': 'service-worker.js',
+  'autorequire': true
+}
+```
+
+```js
+swPrecache: {
+  'autorequire': ['index.html']
+}
+```
+
+*Default:* `false`
+
+
 ##### options [Object]
 
 Options for `sw-precache`.
@@ -28,11 +53,13 @@ Look at all `sw-precache` available [options](https://github.com/GoogleChrome/sw
 
 *Default:* `{staticFileGlobs: ['public/**/*.*']}`
 
+
 > If you don't pass any configuration properties it will cache all files in your `public` folder and create `sw.js`. 
 All what you need is [register service worker](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration) for your app.
 
+
 ###Config example
-```javascript
+```js
 
 module.exports = {
   files: {

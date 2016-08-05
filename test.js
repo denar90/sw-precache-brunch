@@ -32,19 +32,23 @@ describe('Plugin', () => {
 
   describe('Config', () => {
 
-    it('should create default service worker file', () => {
+    beforeEach(() => {
       plugin._setConfig(config);
+    });
+
+    it('should set default service worker file', () => {
+      expect(plugin.swFileName).to.be.equal('sw.js');
       expect(plugin.swFilePath).to.be.equal('public/sw.js');
     });
 
     it('should set cache all files in public by default', () => {
-      plugin._setConfig(config);
       expect(plugin.options.staticFileGlobs[0]).to.be.equal('public/**/*.*');
     });
 
-    it('should create service worker file with special name', () => {
+    it('should set service worker file with special name', () => {
       config.plugins.swPrecache.swFileName = 'test.js';
       plugin._setConfig(config);
+      expect(plugin.swFileName).to.be.equal('test.js');
       expect(plugin.swFilePath).to.be.equal('public/test.js');
     });
 
@@ -54,6 +58,47 @@ describe('Plugin', () => {
       config.plugins.swPrecache.options.staticFileGlobs = staticFileGlobs;
       plugin._setConfig(config);
       expect(plugin.options.staticFileGlobs).to.be.equal(staticFileGlobs);
+    });
+
+    describe('Autorequire', () => {
+      beforeEach(() => {
+        this.assetsList = [
+          {
+            originalPath: '',
+            destinationPath: 'bar.html'
+          },
+          {
+            originalPath: '',
+            destinationPath: 'baz.html'
+          }
+        ];
+      });
+
+      it('should set false by default', () => {
+        expect(plugin.autorequire).to.be.false;
+      });
+
+      it('should set true by default', () => {
+        config.plugins.swPrecache.autorequire = true;
+        plugin._setConfig(config);
+        expect(plugin.autorequire).to.be.true;
+      });
+
+      it('should get default assets list', () => {
+        const expectedFilesList = ['bar.html', 'baz.html'];
+        config.plugins.swPrecache.autorequire = true;
+        plugin._setConfig(config);
+        const assets = plugin._getAssetsList(this.assetsList);
+        expect(assets).to.deep.equal(expectedFilesList);
+      });
+
+      it('should get configurated assets list', () => {
+        const filesList = ['foo.html', 'bar.html'];
+        config.plugins.swPrecache.autorequire = filesList;
+        plugin._setConfig(config);
+        const assets = plugin._getAssetsList(this.assetsList);
+        expect(assets).to.deep.equal(filesList);
+      });
     });
   });
 });
