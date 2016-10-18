@@ -3,13 +3,15 @@ Adds [Service Worker Precache](https://github.com/GoogleChrome/sw-precache) supp
 [brunch](http://brunch.io).
 
 ## Usage
-Install the plugin via npm with `npm install --save sw-precache-brunch`.
+Install the plugin via npm with `npm install --save-dev sw-precache-brunch`.
 
 Or, do manual install:
 
 * Add `"sw-precache-brunch": "~x.y.z"` to `package.json` of your brunch app.
 * If you want to use git version of plugin, use the GitHub URI
 `"sw-precache-brunch": "denar90/sw-precache-brunch"`.
+
+[Project example of it's usage](https://github.com/denar90/brunch-with-marionettejs)
 
 ## Configuration
 

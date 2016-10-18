@@ -28,11 +28,21 @@ class SWCompiler {
   }
 
   _getAssetsList(originalAssets) {
+    let assets;
+
     originalAssets = originalAssets.map((data) => {
       return data.destinationPath;
     });
 
-    return Array.isArray(this.autorequire) ? this.autorequire : originalAssets;
+    assets = Array.isArray(this.autorequire) ? this.autorequire : originalAssets;
+
+    return this._filterHtmlAssets(assets);
+  }
+
+  _filterHtmlAssets(assets) {
+    return assets.filter(assetName => {
+      return assetName.match(/\.(html)$/);
+    });
   }
 
   _includeSWIntoAsset(assetsList) {
@@ -81,6 +91,5 @@ class SWCompiler {
 // Required for all Brunch plugins.
 SWCompiler.prototype.brunchPlugin = true;
 SWCompiler.prototype.type = 'javascript';
-SWCompiler.prototype.extension = 'js';
 
 module.exports = SWCompiler;

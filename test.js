@@ -70,6 +70,10 @@ describe('Plugin', () => {
           {
             originalPath: '',
             destinationPath: 'baz.html'
+          },
+          {
+            originalPath: '',
+            destinationPath: 'foo.json'
           }
         ];
       });
@@ -98,6 +102,13 @@ describe('Plugin', () => {
         plugin._setConfig(config);
         const assets = plugin._getAssetsList(this.assetsList);
         expect(assets).to.deep.equal(filesList);
+      });
+
+      it('filter should return only assets with html extention', () => {
+        const filesList = ['bar.html', 'baz.html', 'foo.json'];
+        const expectedFilesList = ['bar.html', 'baz.html'];
+        const assets = plugin._filterHtmlAssets(filesList);
+        expect(assets).to.deep.equal(expectedFilesList);
       });
     });
   });
