@@ -1,4 +1,4 @@
-## sw-precache-brunch
+## sw-precache-brunch [![Build Status](https://travis-ci.org/denar90/sw-precache-brunch.svg?branch=master)](https://travis-ci.org/denar90/sw-precache-brunch)
 Adds [Service Worker Precache](https://github.com/GoogleChrome/sw-precache) support to
 [brunch](http://brunch.io).
 
