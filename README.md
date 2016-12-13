@@ -40,7 +40,7 @@ swPrecache: {
 
 ```js
 swPrecache: {
-  'autorequire': ['index.html']
+  'autorequire': ['app/assets/index.html']
 }
 ```
 
@@ -77,15 +77,30 @@ module.exports = {
   plugins: {
     babel: {presets: ['es2015']},
     swPrecache: {
-      'swFileName': 'service-worker.js',
-      'options': { 
-        'staticFileGlobs': [
+      swFileName: 'service-worker.js',
+      options: { 
+        staticFileGlobs: [
            'public/app.css',
            'public/app.js',
            'public/index.html'
-        ]
+        ],
+        stripPrefix: 'public/'
       }
     }
+  }
+};
+```
+
+
+```js
+
+module.exports = {
+  plugins: {
+    ...
+    swPrecache: {
+      autorequire: ['app/assets/index.html']
+    }
+    ...
   }
 };
 ```
