@@ -1,7 +1,6 @@
 'use strict';
 
 const sysPath = require('path');
-const fs = require('fs');
 const swPrecache = require('sw-precache');
 const cheerio = require('cheerio');
 const defaultSWOptions = {staticFileGlobs: []};
@@ -18,13 +17,14 @@ class SWCompiler {
 
     this.swFileName = config.swFileName || 'sw.js';
     this.swFilePath = sysPath.join(publicPath, this.swFileName);
-    this.autorequire = (Array.isArray(config.autorequire) || config.autorequire === true) ? config.autorequire : false;
+    this.autorequire = Array.isArray(config.autorequire) || config.autorequire === true ? config.autorequire : false;
     this.options = config.options || defaultSWOptions;
 
     if (!this.options.staticFileGlobs.length) this.options.staticFileGlobs.push(`${publicPath}/**/*.*`);
   }
 
   _changeFileContent(fileContent) {
+    /* eslint-disable no-useless-escape */
     // if file service worker was included into file
     if (fileContent.indexOf(this.swFileName) >= 0) return fileContent;
 
