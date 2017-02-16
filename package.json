@@ -22,7 +22,7 @@
   "dependencies": {
     "async": "^2.0.1",
     "cheerio": "^0.22.0",
-    "sw-precache": "^4.0.0"
+    "sw-precache": "^5.0.0"
   },
   "devDependencies": {
     "chai": "~3.5.0",
