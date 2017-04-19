@@ -22,6 +22,10 @@ Filename for service worker.
 
 *Default:* `'sw.js'`
 
+##### stripPrefix [String]
+
+Removes a specified string from the beginning of path URL's at runtime.
+> [docs](https://github.com/GoogleChrome/sw-precache#stripprefix-string)
 
 ##### autorequire [Boolean, Array]
 
@@ -78,6 +82,7 @@ module.exports = {
     babel: {presets: ['es2015']},
     swPrecache: {
       'swFileName': 'service-worker.js',
+      'stripPrefix': 'public',
       'options': { 
         'staticFileGlobs': [
            'public/app.css',
