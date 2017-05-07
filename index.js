@@ -61,7 +61,7 @@ class SWCompiler {
 
 // Required for all Brunch plugins.
 SWCompiler.prototype.brunchPlugin = true;
-SWCompiler.prototype.type = 'javascript';
+SWCompiler.prototype.type = 'template';
 SWCompiler.prototype.extension = 'html';
 SWCompiler.prototype.staticTargetExtension = 'html';
 
